@@ -26,7 +26,7 @@ def town_list(request):
         serializer = TownSerializer(towns, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 @api_view(['GET',])
@@ -40,7 +40,7 @@ def street_list(request, town_id):
         serializer = StreetSerializer(street, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 
@@ -68,5 +68,7 @@ def shop(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_405_METHOD_NOT_ALLOWED)
